@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* <Route path={pages.home} element={<HomePage />} /> */}
-          <p>teste</p>
+          <p>teste2</p>
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>
