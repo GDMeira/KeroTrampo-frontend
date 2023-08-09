@@ -11,10 +11,6 @@ const GlobalStyle = createGlobalStyle`
         cursor: pointer;
     }
 
-    body {
-      background-color: #1F1712;
-    }
-
     a {
         color: inherit;
         text-decoration: inherit;
