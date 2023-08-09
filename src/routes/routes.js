@@ -1,7 +1,7 @@
 export const pages = {
-    home: '/',
-    signUp: '/signup',
-    signIn: '/signIn'
+    home: '/home',
+    signUp: '/signUp',
+    signIn: '/'
 }
 
 const API_URL = import.meta.env.VITE_API_URL;
