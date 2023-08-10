@@ -208,6 +208,6 @@ button {
 const LinkToSignIn = styled(Link)`
   align-self: center;
   font-size: 18px;
-  color: #F6E4C4;
+  color: #000;
   text-decoration: underline;
 `;
