@@ -7,6 +7,7 @@ import SignUpPage from './pages/SignUpPage/SignUpPage';
 import SignInPage from './pages/SignInPage/SignInPage';
 import MyServicesPage from './pages/MyServicesPage/MyServicesPage';
 import CategoriesPage from './pages/CategoriesPage/CategoriesPage';
+import ServiceDetail from './pages/ServiceDetail/ServiceDetail';
 
 function App() {
   const [user, setUser] = useState(0);
@@ -18,6 +19,7 @@ function App() {
           <Route path={pages.signUp} element={<SignUpPage />} />
           <Route path={pages.signIn} element={<SignInPage />} />
           <Route path={pages.home} element={<HomePage />} />
+          <Route path={pages.serviceDetails + ':id'} element={<ServiceDetail />} />
           <Route path={pages.myServices} element={<MyServicesPage />} />
           <Route path={pages.servicesByCategories} element={<CategoriesPage />} />
         </Routes>

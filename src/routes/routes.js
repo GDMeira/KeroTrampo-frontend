@@ -2,6 +2,7 @@ export const pages = {
     home: '/home',
     signUp: '/signUp',
     signIn: '/',
+    serviceDetails: '/services/',
     myServices: '/services/me',
     servicesByCategories: '/services/categories'
 }
@@ -12,7 +13,8 @@ export const requisitions = {
     postSignUp: API_URL + '/signup',
     postSignIn: API_URL + '/signin',
     postSignInGoogle: API_URL + '/signin/google',
-    getServices: API_URL + '/services'
+    getServices: API_URL + '/services',
+    getServiceDetail: API_URL + '/services/'
 }
 
 export function headersAuth(token) {
