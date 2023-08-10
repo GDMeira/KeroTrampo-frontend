@@ -1,6 +1,10 @@
 import { Button, Card, CardBody, CardFooter, Divider, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { pages } from "../../routes/routes";
 
 export default function ServiceCard({ service }) {
+    const navigate = useNavigate();
+
     return (
         <>
             <Card mt='5'
@@ -35,8 +39,7 @@ export default function ServiceCard({ service }) {
                     </CardBody>
 
                     <CardFooter>
-                        {/* onClick ir para page do produto */}
-                        <Button variant='solid' colorScheme='blue' mt='-10'>
+                        <Button variant='solid' colorScheme='blue' mt='-10' onClick={() => navigate(pages.serviceDetails + service.id)}>
                             Ver detalhes
                         </Button>
                     </CardFooter>

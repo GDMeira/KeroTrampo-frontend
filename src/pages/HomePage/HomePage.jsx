@@ -14,7 +14,6 @@ export default function HomePage() {
         axios.get(requisitions.getServices)
             .then(res => {
                 setServices(res.data)
-                console.log(res.data)
             })
             .catch(error => alert(error.response.data.message));
     }, [])
@@ -28,7 +27,6 @@ export default function HomePage() {
             ) : (
                 services.map(service => <ServiceCard key={service.id} service={service} />)
             )}
-            aoba
             <FooterMenu />
         </PageSC>
     )
