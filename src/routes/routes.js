@@ -1,7 +1,9 @@
 export const pages = {
     home: '/home',
     signUp: '/signUp',
-    signIn: '/'
+    signIn: '/',
+    myServices: '/services/me',
+    servicesByCategories: '/services/categories'
 }
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -10,6 +12,7 @@ export const requisitions = {
     postSignUp: API_URL + '/signup',
     postSignIn: API_URL + '/signin',
     postSignInGoogle: API_URL + '/signin/google',
+    getServices: API_URL + '/services'
 }
 
 export function headersAuth(token) {
