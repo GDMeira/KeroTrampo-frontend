@@ -33,7 +33,6 @@ export default function SignUpPage() {
         const newUser = { ...formStates };
         delete newUser.checkPassword;
         setDisable(true);
-        console.log(newUser)
 
         axios.post(requisitions.postSignUp, newUser)
             .then(() => {

@@ -50,7 +50,7 @@ export default function ServiceDetailCard({ serviceInfo }) {
                 />
 
                 <Stack>
-                    <CardBody >
+                    <CardBody p='5px'>
                         <Heading size='lx'>{service.name}</Heading>
 
                         <Text py='2' fontSize='0.7em' color='gray.400' textAlign='right'>

@@ -8,6 +8,7 @@ import SignInPage from './pages/SignInPage/SignInPage';
 import MyServicesPage from './pages/MyServicesPage/MyServicesPage';
 import CategoriesPage from './pages/CategoriesPage/CategoriesPage';
 import ServiceDetail from './pages/ServiceDetail/ServiceDetail';
+import EditServicePage from './pages/EditServicePage/EditServicePage';
 
 function App() {
   const [user, setUser] = useState(0);
@@ -21,6 +22,7 @@ function App() {
           <Route path={pages.home} element={<HomePage />} />
           <Route path={pages.serviceDetails + ':id'} element={<ServiceDetail />} />
           <Route path={pages.myServices} element={<MyServicesPage />} />
+          <Route path={pages.editService + ':id'} element={<EditServicePage />} />
           <Route path={pages.servicesByCategories} element={<CategoriesPage />} />
         </Routes>
       </BrowserRouter>

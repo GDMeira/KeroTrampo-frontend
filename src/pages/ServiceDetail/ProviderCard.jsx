@@ -1,7 +1,11 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Heading, Image, Text } from "@chakra-ui/react";
+import { FaWhatsapp } from "react-icons/fa";
 
 
-export default function ProviderCard({ provider }) {
+export default function ProviderCard({ serviceInfo }) {
+    const { service, provider } = serviceInfo;
+    const message = encodeURIComponent(`Olá, gostaria de conversar sobre o serviço ${service.name} postado no KeroTrampo.`);
+    const whatsappLink = `https://api.whatsapp.com/send?phone=+55${provider.phone}&text=${message}`;
 
     return (
         <Card bg='none'>
@@ -19,7 +23,9 @@ export default function ProviderCard({ provider }) {
                 <Text fontSize='0.7em'>{provider.description}</Text>
             </CardBody>
             <CardFooter display='flex' justifyContent='center' alignItems='center'>
-                <Button>Telefone para contato: {provider.phone}</Button>
+                <Button as="a" href={whatsappLink} target="_blank" rel="noopener noreferrer" leftIcon={<FaWhatsapp />}>
+                    {provider.phone}
+                </Button>
             </CardFooter>
         </Card>
     )

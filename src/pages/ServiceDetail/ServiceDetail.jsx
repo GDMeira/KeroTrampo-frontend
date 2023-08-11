@@ -28,7 +28,7 @@ export default function ServiceDetail() {
             {serviceInfo?.service && (
                 <>
                     <ServiceDetailCard serviceInfo={serviceInfo} />
-                    <ProviderCard provider={serviceInfo.provider} />
+                    <ProviderCard serviceInfo={serviceInfo} />
                 </>
             )}
             <FooterMenu />
