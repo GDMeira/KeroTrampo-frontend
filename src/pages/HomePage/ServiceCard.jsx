@@ -19,10 +19,11 @@ export default function ServiceCard({ service }) {
                     maxW={{ base: '100%', sm: '200px' }}
                     src={service.url}
                     alt='Service image'
+                    h='200px'
                 />
 
                 <Stack>
-                    <CardBody>
+                    <CardBody p='0'>
                         <Heading size='lg'>{service.name}</Heading>
 
                         <Text py='2' fontSize='0.5em' color='gray.400' textAlign='right'>
@@ -36,16 +37,14 @@ export default function ServiceCard({ service }) {
                         <Text color='blue.300' fontSize='2xl'>
                             Custo médio R${(service.meanCost / 100).toFixed(2)}
                         </Text>
-                    </CardBody>
 
-                    <CardFooter>
-                        <Button variant='solid' colorScheme='blue' mt='-10' onClick={() => navigate(pages.serviceDetails + service.id)}>
+                        <Button variant='solid' colorScheme='blue' onClick={() => navigate(pages.serviceDetails + service.id)}>
                             Ver detalhes
                         </Button>
-                    </CardFooter>
+                    </CardBody>
                 </Stack>
             </Card>
-            <Divider w='94%'/>
+            <Divider w='94%'mt='3'/>
         </>
     )
 }

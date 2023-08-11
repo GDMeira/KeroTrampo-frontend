@@ -26,7 +26,6 @@ export default function SignUpPage() {
 
         const user = { ...formStates };
         setDisable(true);
-        console.log(user)
 
         axios.post(requisitions.postSignIn, user)
             .then((res) => {

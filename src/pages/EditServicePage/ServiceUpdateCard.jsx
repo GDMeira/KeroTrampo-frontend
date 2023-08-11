@@ -1,8 +1,7 @@
 import { Card, CardBody, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
-export default function ServiceDetailCard({ serviceInfo }) {
-    const { service, provider } = serviceInfo;
+export default function ServiceUpdateCard({ service }) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     useEffect(() => {
@@ -12,25 +11,6 @@ export default function ServiceDetailCard({ serviceInfo }) {
 
         return () => clearInterval(interval);
     }, [service.url.length]);
-
-    function targetRegion() {
-        switch (service.targetRegion) {
-            case 'same city':
-                return `Cidade de ${provider.city}-${provider.stateAcronym}`
-                break;
-            
-            case 'same state':
-                return `Estado de ${provider.state}`
-                break;
-
-            case 'everywhere':
-                return `Qualquer região`
-                break;
-        
-            default:
-                break;
-        }
-    }
 
     return (
         <>
@@ -66,7 +46,11 @@ export default function ServiceDetailCard({ serviceInfo }) {
                         </Text>
 
                         <Text fontSize='0.8em'>
-                            Região de atendimento: {targetRegion()}
+                            Região de atendimento: {service.targetRegion}
+                        </Text>
+
+                        <Text fontSize='0.8em'>
+                            Está visível? {service.isVisible}
                         </Text>
                     </CardBody>
                 </Stack>
