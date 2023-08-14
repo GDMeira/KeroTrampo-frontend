@@ -6,37 +6,34 @@ import {
     Textarea,
     Button,
     Checkbox,
-    Select, // Adicione o componente Select
+    Select,
     Stack,
     InputLeftElement,
     Text,
     InputGroup,
+    Image,
+    Flex,
+    Spinner,
 } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons'
+import axios from 'axios';
+import { headersAuth, pages, requisitions } from '../../routes/routes';
+import { useNavigate } from 'react-router-dom';
 
-function EditServiceForm({ service }) {
+export default function CreateServiceForm({ serviceParams, user }) {
+    const [newId, setNewId] = useState(-2);
     const [formData, setFormData] = useState({
         meanCost: '',
         name: '',
         description: '',
-        isVisible: false,
-        category: '',
-        url: [],
-        targetRegion: '',
+        isVisible: true,
+        category: serviceParams.categories[0],
+        images: [{id: -1, url: ''}],
+        mainImage: '',
+        targetRegion: serviceParams.targets[0],
     });
-
-    useEffect(() => {
-        if (service) {
-            setFormData({
-                meanCost: service.meanCost / 100,
-                name: service.name,
-                description: service.description,
-                isVisible: service.isVisible,
-                category: service.category,
-                url: service.url || [],
-                targetRegion: service.targetRegion,
-            });
-        }
-    }, [service]);
+    const [isDisable, setIsDisable] = useState(false);
+    const navigate = useNavigate();
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -49,23 +46,42 @@ function EditServiceForm({ service }) {
     const handleAddUrl = () => {
         setFormData((prevData) => ({
             ...prevData,
-            url: [...prevData.url, ''], // Adiciona uma URL vazia no final do array
+            images: [...prevData.images, {id: newId, url: ''}]
         }));
+        setNewId(newId - 1);
     };
 
     const handleUrlChange = (index, value) => {
-        const newUrls = [...formData.url];
-        newUrls[index] = value;
+        const newImages = [...formData.images];
+        newImages[index].url = value;
         setFormData((prevData) => ({
             ...prevData,
-            url: newUrls,
+            images: newImages,
         }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aqui você pode enviar o formData para a API para salvar as alterações
-        // meanCost *= 100
+        setIsDisable(true);
+        const serviceData = { ...formData, meanCost: Math.round(formData.meanCost * 100) };
+        serviceData.images = serviceData.images.filter(image => image.url !== '');
+        if (serviceData.images.length === 0) {
+            alert('Adicione pelo menos 1 imagem.');
+            setIsDisable(false);
+            return
+        }
+        if (serviceData.mainImage === '') serviceData.mainImage = serviceData.images[0].url;
+
+        axios.post(requisitions.postService, serviceData, headersAuth(user.token))
+            .then(res => {
+                alert('Sucesso!');
+                navigate(pages.myServices);
+            })
+            .catch(error => {
+                alert(error.response.data.message);
+                setIsDisable(false);
+            })
+
     };
 
     return (
@@ -74,6 +90,7 @@ function EditServiceForm({ service }) {
                 <FormControl>
                     <FormLabel>Nome do serviço</FormLabel>
                     <Input
+                        disabled={isDisable}
                         type="text"
                         name="name"
                         value={formData.name}
@@ -83,6 +100,7 @@ function EditServiceForm({ service }) {
                 <FormControl>
                     <FormLabel>Descrição do serviço</FormLabel>
                     <Textarea
+                        disabled={isDisable}
                         name="description"
                         value={formData.description}
                         onChange={handleInputChange}
@@ -92,6 +110,7 @@ function EditServiceForm({ service }) {
                     <FormLabel>Custo médio</FormLabel>
                     <InputGroup size='md'>
                         <Input
+                            disabled={isDisable}
                             type="number"
                             name="meanCost"
                             value={formData.meanCost}
@@ -107,11 +126,12 @@ function EditServiceForm({ service }) {
                 <FormControl>
                     <FormLabel>Categoria</FormLabel>
                     <Select
+                        disabled={isDisable}
                         name="category"
                         value={formData.category}
                         onChange={handleInputChange}
                     >
-                        {service.categories.map((category) => (
+                        {serviceParams.categories.map((category) => (
                             <option key={category} value={category}>
                                 {category}
                             </option>
@@ -121,11 +141,12 @@ function EditServiceForm({ service }) {
                 <FormControl>
                     <FormLabel>Área de cobertura</FormLabel>
                     <Select
+                        disabled={isDisable}
                         name="targetRegion"
                         value={formData.targetRegion}
                         onChange={handleInputChange}
                     >
-                        {service.targets.map((target) => (
+                        {serviceParams.targets.map((target) => (
                             <option key={target} value={target}>
                                 {target}
                             </option>
@@ -133,39 +154,68 @@ function EditServiceForm({ service }) {
                     </Select>
                 </FormControl>
                 <FormControl>
-                    <FormLabel>Visível</FormLabel>
+                    <FormLabel>Visibilidade</FormLabel>
                     <Checkbox
+                        disabled={isDisable}
                         name="isVisible"
                         isChecked={formData.isVisible}
                         onChange={handleInputChange}
                     >
-                        O serviço está visível
+                        {formData.isVisible ? 'O serviço está visível' : 'O serviço não está visível'}
                     </Checkbox>
                 </FormControl>
 
                 <FormControl>
                     <FormLabel>Imagens</FormLabel>
-                    {formData.url.map((url, index) => (
-                        <InputGroup key={index} size="md">
-                            <Input
-                                type="text"
-                                value={url}
-                                onChange={(e) => handleUrlChange(index, e.target.value)}
+                    {formData.images.map(({ id, url }, index) => (
+                        <Flex flexDirection='column' justifyContent='center' mt={1} mb={5} key={id}>
+                            <InputGroup size="md">
+                                <Input
+                                    disabled={isDisable}
+                                    type="text"
+                                    value={url}
+                                    onChange={(e) => handleUrlChange(index, e.target.value)}
+                                />
+                            </InputGroup>
+                            <Image
+                                objectFit='cover'
+                                w='300px'
+                                h='200px'
+                                src={url}
+                                alt='Service image'
+                                mt={2}
                             />
-
-                        </InputGroup>
+                        </Flex>
                     ))}
-                    <Button size="sm" onClick={handleAddUrl}>
-                        + Adicionar
+                    <Button size="sm" onClick={handleAddUrl} colorScheme="red" disabled={isDisable}>
+                        <AddIcon/>
                     </Button>
                 </FormControl>
 
-                <Button type="submit" colorScheme="blue">
-                    Salvar alterações
+                <FormControl>
+                    <FormLabel>Imagem principal</FormLabel>
+                    <Select
+                        disabled={isDisable}
+                        name="mainImage"
+                        value={formData.mainImage}
+                        onChange={handleInputChange}
+                    >
+                        {formData.images.map(({ id, url }, index) => (
+                            <option key={id} value={url}>
+                                Imagem {index + 1}
+                            </option>
+                        ))}
+                    </Select>
+                </FormControl>
+
+                <Button type="submit" colorScheme="blue" disabled={isDisable}>
+                    {isDisable ? (
+                        <Spinner color='gray.500' />
+                    ) : (
+                        "Salvar alterações"
+                    )}
                 </Button>
             </Stack>
         </form>
     );
 }
-
-export default EditServiceForm;

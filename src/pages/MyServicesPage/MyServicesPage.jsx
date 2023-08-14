@@ -3,14 +3,17 @@ import FooterMenu from "../../components/FooterMenu";
 import Header from "../../components/Header";
 import { PageSC } from "../../style/PageLayout";
 import axios from "axios";
-import { headersAuth, requisitions } from "../../routes/routes";
-import { Flex, SimpleGrid, Spinner } from "@chakra-ui/react";
+import { headersAuth, pages, requisitions } from "../../routes/routes";
+import { Box, Button, Flex, Spinner, Text } from "@chakra-ui/react";
+import { AddIcon } from '@chakra-ui/icons';
 import MyServiceCard from "./MyServiceCard";
 import AuthContext from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function MyServicesPage() {
     const { user, setUser } = useContext(AuthContext)
     const [services, setServices] = useState(undefined);
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(requisitions.getMyServices, headersAuth(user?.token))
@@ -27,10 +30,42 @@ export default function MyServicesPage() {
             {services?.length === 0 || !services ? (
                 <h1>Você ainda não tem trampos para mostrar.</h1>
             ) : (
-                <Flex wrap='wrap' justifyContent='space-evenly'>
-                    {services.map(service => <MyServiceCard key={service.id} service={service} />)}
-                </Flex>
+                <>
+                    <Box w='100%' pl={2}>
+                        <Text
+                            color='#000'
+                            fontSize="3xl"
+                            fontWeight="extrabold"
+                        >
+                            Crie um novo trampo!
+                        </Text>
+                    </Box>
+                    <Flex wrap='wrap' justifyContent='space-evenly'>
+                        {services.map(service => <MyServiceCard key={service.id} service={service} />)}
+                    </Flex>
+                </>
             )}
+
+            <Box w='100%' pl={2}>
+                <Text
+                    color='#000'
+                    fontSize="3xl"
+                    fontWeight="extrabold"
+                >
+                    Crie um novo trampo!
+                </Text>
+                <Button
+                    mt={2}
+                    variant='solid'
+                    colorScheme='red'
+                    size='lg'
+                    onClick={() => navigate(pages.CreateService)}
+                >
+                    <AddIcon />
+                </Button>
+            </Box>
+
+
             <FooterMenu />
         </PageSC>
     )
