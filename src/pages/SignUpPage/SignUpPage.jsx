@@ -5,7 +5,8 @@ import { pages, requisitions } from "../../routes/routes";
 import { useState } from "react";
 import Logo from "../../components/Logo";
 import { PageSC } from "../../style/PageLayout";
-import { Button, Input, InputGroup, InputLeftAddon, InputRightElement, Spinner, Stack } from '@chakra-ui/react';
+import { Button, Flex, Input, InputGroup, InputLeftAddon, InputRightElement, Spinner, Stack } from '@chakra-ui/react';
+import { BsSkipForwardFill } from "react-icons/bs";
 
 export default function SignUpPage() {
     const [formStates, setFormStates] = useState({
@@ -167,6 +168,9 @@ export default function SignUpPage() {
                     </BottomBox>
                 </form>
             </ContainerSC>
+            <Flex w='84vw' mt={7} align='center' justify='flex-end'>
+                <BsSkipForwardFill onClick={() => navigate(pages.home)}/>
+            </Flex>
         </PageSC>
 
     )

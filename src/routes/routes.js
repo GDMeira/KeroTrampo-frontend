@@ -22,7 +22,8 @@ export const requisitions = {
     updateService: API_URL + '/user/services/',
     getServiceParams: API_URL + '/user/services-params',
     postService: API_URL + '/user/new-service',
-    getAllParams: API_URL + '/services-params'
+    getAllParams: API_URL + '/services-params',
+    getServicesByCategories: API_URL + '/services-by-categories'
 }
 
 export function headersAuth(token) {
