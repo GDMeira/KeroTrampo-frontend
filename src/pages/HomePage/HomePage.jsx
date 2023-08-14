@@ -44,7 +44,6 @@ export default function HomePage() {
     const debouncedSearch = debounce((queryParams) => {
         axios.get(requisitions.getServices, { params: queryParams })
             .then(res => {
-                console.log(res.data)
                 setServices(res.data);
             })
             .catch(error => alert(error.response.data.message));
@@ -78,7 +77,6 @@ export default function HomePage() {
                     state: newData.state
                 };
         debouncedSearch(queryParams);
-        console.log(queryParams)
     };
 
     return (
