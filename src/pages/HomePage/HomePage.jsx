@@ -44,7 +44,6 @@ export default function HomePage() {
     const debouncedSearch = debounce((queryParams) => {
         axios.get(requisitions.getServices, { params: queryParams })
             .then(res => {
-                console.log(res.data)
                 setServices(res.data);
             })
             .catch(error => alert(error.response.data.message));
@@ -78,14 +77,13 @@ export default function HomePage() {
                     state: newData.state
                 };
         debouncedSearch(queryParams);
-        console.log(queryParams)
     };
 
     return (
         <PageSC>
             <Header />
             {!services || !serviceParams && <Spinner size='xl' />}
-            {(services?.length === 0 || !services) && isFirstSearch ? (
+            {services?.length === 0 || !services || !serviceParams ? (
                 <h1>Ainda não temos serviços para mostrar.</h1>
             ) : (
                 <>
