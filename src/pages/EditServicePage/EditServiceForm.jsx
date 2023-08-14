@@ -15,12 +15,14 @@ import {
     Flex,
     Spinner,
 } from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons'
 import axios from 'axios';
 import { headersAuth, pages, requisitions } from '../../routes/routes';
 import { useNavigate } from 'react-router-dom';
 
 export default function EditServiceForm({ service, id, user }) {
     const navigate = useNavigate();
+    const [newId, setNewId] = useState(-1);
     const [formData, setFormData] = useState({
         meanCost: '',
         name: '',
@@ -56,12 +58,12 @@ export default function EditServiceForm({ service, id, user }) {
         }));
     };
 
-    let newId = -1;
     const handleAddUrl = () => {
         setFormData((prevData) => ({
             ...prevData,
-            images: [...prevData.images, {id: newId--, url: ''}]
+            images: [...prevData.images, {id: newId, url: ''}]
         }));
+        setNewId(newId - 1);
     };
 
     const handleUrlChange = (index, value) => {
@@ -194,8 +196,8 @@ export default function EditServiceForm({ service, id, user }) {
                             />
                         </Flex>
                     ))}
-                    <Button size="sm" onClick={handleAddUrl} colorScheme="blue" disabled={isDisable}>
-                        + Adicionar
+                    <Button size="sm" onClick={handleAddUrl} colorScheme="red" disabled={isDisable}>
+                        <AddIcon/>
                     </Button>
                 </FormControl>
 

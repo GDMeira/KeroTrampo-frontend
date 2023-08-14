@@ -5,7 +5,8 @@ export const pages = {
     serviceDetails: '/services/',
     myServices: '/user/services',
     editService: '/user/services/',
-    servicesByCategories: '/services/categories'
+    servicesByCategories: '/services/categories',
+    CreateService: '/user/new-service'
 }
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -18,7 +19,9 @@ export const requisitions = {
     getServiceDetail: API_URL + '/services/',
     getMyServices: API_URL + '/user/services',
     getMyServiceDetail: API_URL + '/user/services/',
-    updateService: API_URL + '/user/services/'
+    updateService: API_URL + '/user/services/',
+    getServiceParams: API_URL + '/user/services-params',
+    postService: API_URL + '/user/new-service'
 }
 
 export function headersAuth(token) {

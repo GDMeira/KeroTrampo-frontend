@@ -9,6 +9,7 @@ import MyServicesPage from './pages/MyServicesPage/MyServicesPage';
 import CategoriesPage from './pages/CategoriesPage/CategoriesPage';
 import ServiceDetail from './pages/ServiceDetail/ServiceDetail';
 import EditServicePage from './pages/EditServicePage/EditServicePage';
+import CreateServicePage from './pages/CreateServicePage/CreateServicePage';
 
 function App() {
   const [user, setUser] = useState(0);
@@ -24,6 +25,7 @@ function App() {
           <Route path={pages.myServices} element={<MyServicesPage />} />
           <Route path={pages.editService + ':id'} element={<EditServicePage />} />
           <Route path={pages.servicesByCategories} element={<CategoriesPage />} />
+          <Route path={pages.CreateService} element={<CreateServicePage />} />
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>
