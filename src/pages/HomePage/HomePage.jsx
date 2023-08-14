@@ -85,7 +85,7 @@ export default function HomePage() {
         <PageSC>
             <Header />
             {!services || !serviceParams && <Spinner size='xl' />}
-            {(services?.length === 0 || !services) && isFirstSearch ? (
+            {services?.length === 0 || !services || !serviceParams ? (
                 <h1>Ainda não temos serviços para mostrar.</h1>
             ) : (
                 <>
