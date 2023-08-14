@@ -9,5 +9,5 @@ export const PageSC = styled.section`
     flex-direction: column;
     align-items: center;
     padding-top: 80px;
-    padding-bottom: 60px;
+    padding-bottom: 80px;
 `

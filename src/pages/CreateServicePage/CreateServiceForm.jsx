@@ -14,6 +14,7 @@ import {
     Image,
     Flex,
     Spinner,
+    useToast,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons'
 import axios from 'axios';
@@ -21,6 +22,7 @@ import { headersAuth, pages, requisitions } from '../../routes/routes';
 import { useNavigate } from 'react-router-dom';
 
 export default function CreateServiceForm({ serviceParams, user }) {
+    const toast = useToast();
     const [newId, setNewId] = useState(-2);
     const [formData, setFormData] = useState({
         meanCost: '',
@@ -74,7 +76,13 @@ export default function CreateServiceForm({ serviceParams, user }) {
 
         axios.post(requisitions.postService, serviceData, headersAuth(user.token))
             .then(res => {
-                alert('Sucesso!');
+                toast({
+                    title: 'Trampo criado.',
+                    description: "Seu trampo foi salvo com sucesso.",
+                    status: 'success',
+                    duration: 6000,
+                    isClosable: true,
+                  });
                 navigate(pages.myServices);
             })
             .catch(error => {

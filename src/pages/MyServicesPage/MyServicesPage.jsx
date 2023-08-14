@@ -9,9 +9,11 @@ import { AddIcon } from '@chakra-ui/icons';
 import MyServiceCard from "./MyServiceCard";
 import AuthContext from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import SigninMessage from "../../components/SiginMessage";
 
 export default function MyServicesPage() {
-    const { user, setUser } = useContext(AuthContext)
+    const { user, setUser } = useContext(AuthContext);
+    const [showSigninMessage, setShowSigninMessage] = useState(false);
     const [services, setServices] = useState(undefined);
     const navigate = useNavigate();
 
@@ -20,11 +22,19 @@ export default function MyServicesPage() {
             .then(res => {
                 setServices(res.data);
             })
-            .catch(error => alert(error.response.data.message));
+            .catch(error => {
+                console.log(error)
+                if (error.response.status === 401) {
+                    setShowSigninMessage(true);
+                } else {
+                    alert(error.response.data.message);
+                }
+            });
     }, [])
 
     return (
         <PageSC>
+            {showSigninMessage && <SigninMessage />}
             <Header />
             {!services && <Spinner size='xl' />}
             {services?.length === 0 || !services ? (
