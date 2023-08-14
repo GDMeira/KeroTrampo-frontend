@@ -1,5 +1,7 @@
-import { Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, IconButton, Spacer, useDisclosure } from '@chakra-ui/react';
+import { Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, IconButton, Image, Spacer, useDisclosure } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { CiLocationOn } from "react-icons/ci";
+import brench from '../assets/brench.png';
 
 export default function Header() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -19,9 +21,18 @@ export default function Header() {
             opacity='0.93'
             padding='0px 10px'
         >
-            <h1>Localização</h1>
+            <>
+                <CiLocationOn />
+            </>
             <Spacer />
-            <h1>Header</h1>
+            <Image
+                objectFit='cover'
+                maxW={{ base: '100%', sm: '200px' }}
+                w='20vw'
+                src={brench}
+                alt='Service image'
+                borderRadius='10px'
+            />
             <Spacer />
             <HamburgerIcon h={20} onClick={onOpen} />
             <Drawer placement='right' onClose={onClose} isOpen={isOpen} width='40%'>
