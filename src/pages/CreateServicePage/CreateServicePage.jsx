@@ -14,10 +14,10 @@ export default function CreateServicePage() {
     const [serviceParams, setServiceParams] = useState(0);
 
     useEffect(() => {
-        axios.get(requisitions.getServiceParams,headersAuth(user.token))
+        axios.get(requisitions.getServiceParams, headersAuth(user.token))
             .then(resp => setServiceParams(resp.data))
             .catch(error => alert(error.response.data.message));
-    })
+    }, [])
 
     return (
         <PageSC>

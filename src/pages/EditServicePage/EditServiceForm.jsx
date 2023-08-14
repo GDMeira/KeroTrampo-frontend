@@ -50,7 +50,7 @@ export default function EditServiceForm({ service, id, user }) {
         }
     }, [service]);
 
-    const handleInputChange = (e) => {
+    function handleInputChange(e) {
         const { name, value, type, checked } = e.target;
         setFormData((prevData) => ({
             ...prevData,
