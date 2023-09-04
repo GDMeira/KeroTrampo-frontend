@@ -9,7 +9,7 @@ import { Button, Flex, Input, InputGroup, InputLeftAddon, InputRightElement, Spi
 import AuthContext from "../../contexts/AuthContext";
 import { BsSkipForwardFill } from "react-icons/bs";
 
-export default function SignUpPage() {
+export default function SignInPage() {
     const [formStates, setFormStates] = useState({
         email: '',
         password: ''
@@ -31,10 +31,16 @@ export default function SignUpPage() {
         axios.post(requisitions.postSignIn, user)
             .then((res) => {
                 const newUser = {
-                    token: res.data.token
+                    token: res.data.token,
+                    image: res.data.image,
+                    name: res.data.name,
+                    isProvider: res.data.isProvider,
+                    description: res.data.description,
+                    phone: res.data.phone,
+                    id: res.data.id
                 }
                 setUser(newUser);
-                localStorage.setItem("user", JSON.stringify(newUser));
+                localStorage.setItem("userKT", JSON.stringify(newUser));
                 setDisable(false);
                 navigate(pages.home);
             })
@@ -56,7 +62,7 @@ export default function SignUpPage() {
                 <form onSubmit={e => handleSubmit(e)}>
                     <TopBox >
                         <Logo />
-                        <div>Signin</div>
+                        <div>Sign in</div>
                     </TopBox>
 
                     <Stack spacing={5} mt={30} mb={30} >

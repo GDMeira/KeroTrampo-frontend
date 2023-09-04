@@ -1,6 +1,6 @@
 export const pages = {
     home: '/home',
-    signUp: '/signUp',
+    signUp: '/sign-up',
     signIn: '/',
     serviceDetails: '/services/',
     myServices: '/user/services',
@@ -23,7 +23,8 @@ export const requisitions = {
     getServiceParams: API_URL + '/user/services-params',
     postService: API_URL + '/user/new-service',
     getAllParams: API_URL + '/services-params',
-    getServicesByCategories: API_URL + '/services-by-categories'
+    getServicesByCategories: API_URL + '/services-by-categories',
+    signOut: API_URL + '/signout'
 }
 
 export function headersAuth(token) {

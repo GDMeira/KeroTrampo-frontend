@@ -10,7 +10,7 @@ import AuthContext from "../../contexts/AuthContext";
 import EditServiceForm from "./EditServiceForm";
 
 export default function EditServicePage() {
-    const { user, setUser } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     const [service, setService] = useState(undefined);
     const { id } = useParams();
 

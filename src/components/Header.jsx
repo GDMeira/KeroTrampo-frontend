@@ -1,15 +1,39 @@
-import { Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, IconButton, Image, Spacer, useDisclosure } from '@chakra-ui/react';
+import { Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Image, Spacer, Stack, useDisclosure } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { CiLocationOn } from "react-icons/ci";
 import brench from '../assets/brench.png';
+import axios from 'axios';
+import { headersAuth, pages, requisitions } from '../routes/routes';
+import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import AuthContext from '../contexts/AuthContext';
 
 export default function Header() {
+    const { user, setUser } = useContext(AuthContext)
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [ isLoading, setIsLoading ] = useState(false) ;
+    const navigate = useNavigate();
+
+    async function signOut() {
+        setIsLoading(true);
+
+        axios.delete(requisitions.signOut, headersAuth(user.token))
+            .then(() => {
+                onClose();
+                localStorage.removeItem('userKT');
+                setUser(undefined);
+                navigate(pages.signIn);
+            })
+            .catch(err => {
+                setIsLoading(false);
+                alert(err.response.data.message);
+            })
+    }
 
     return (
         <Flex
             minWidth='max-content'
-            minHeight='60px'
+            h='60px'
             alignItems='center'
             gap='2'
             position='fixed'
@@ -27,7 +51,6 @@ export default function Header() {
             <Spacer />
             <Image
                 objectFit='cover'
-                maxW={{ base: '100%', sm: '200px' }}
                 w='20vw'
                 src={brench}
                 alt='Service image'
@@ -38,11 +61,46 @@ export default function Header() {
             <Drawer placement='right' onClose={onClose} isOpen={isOpen} width='40%'>
                 <DrawerOverlay />
                 <DrawerContent>
-                    <DrawerHeader borderBottomWidth='1px'>Basic Drawer</DrawerHeader>
+                    <DrawerHeader
+                        borderBottomWidth='1px'
+                        display='flex'
+                        flexDir='column'
+                        justifyContent='center'
+                        alignItems='center'
+
+                    >
+                        <Image
+                            borderRadius='full'
+                            h='150px'
+                            w='150px'
+                            src={(!user || user.image === '') ? 'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png' : user.image}
+                            alt='Dan Abramov'
+                        />
+                        {user !== undefined && user.name}
+                    </DrawerHeader>
                     <DrawerBody>
-                        <p>Some contents...</p>
-                        <p>Some contents...</p>
-                        <p>Some contents...</p>
+                        {user !== undefined ? (
+                            <Stack spacing={3}>
+                                <Button variant="link" size="md" color="blue.500">
+                                    Atualizar dados da conta
+                                </Button>
+                                <Button variant="link" size="md" color="blue.500">
+                                    Alterar endereço
+                                </Button>
+                                <Button onClick={() => signOut()} variant="link" size="md" color="red.500" isLoading={isLoading}>
+                                    Sair
+                                </Button>
+                            </Stack>
+                        ) : (
+                            <Stack spacing={3}>
+                                <Button onClick={() => navigate(pages.signIn)} variant="link" size="md" color="blue.500" isLoading={isLoading}>
+                                    Fazer login
+                                </Button>
+                                <Button onClick={() => navigate(pages.signUp)} variant="link" size="md" color="blue.500" isLoading={isLoading}>
+                                    Não tem uma conta? Cadastre-se agora!
+                                </Button>
+                            </Stack>
+                        )}
                     </DrawerBody>
                 </DrawerContent>
             </Drawer>

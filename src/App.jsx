@@ -4,15 +4,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { pages } from './routes/routes';
 import HomePage from './pages/HomePage/HomePage';
 import SignUpPage from './pages/SignUpPage/SignUpPage';
-import SignInPage from './pages/SignInPage/SignInPage';
 import MyServicesPage from './pages/MyServicesPage/MyServicesPage';
 import CategoriesPage from './pages/CategoriesPage/CategoriesPage';
 import ServiceDetail from './pages/ServiceDetail/ServiceDetail';
 import EditServicePage from './pages/EditServicePage/EditServicePage';
 import CreateServicePage from './pages/CreateServicePage/CreateServicePage';
+import SignInPage from './pages/SignInPage/SignInPage';
 
 function App() {
-  const [user, setUser] = useState(0);
+  const [user, setUser] = useState(localStorage.getItem('userKT') ? JSON.parse(localStorage.getItem('userKT')) : undefined);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
