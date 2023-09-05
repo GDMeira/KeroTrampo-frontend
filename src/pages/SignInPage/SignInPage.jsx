@@ -37,8 +37,16 @@ export default function SignInPage() {
                     isProvider: res.data.isProvider,
                     description: res.data.description,
                     phone: res.data.phone,
-                    id: res.data.id
+                    id: res.data.id,
+                    adress: {
+                        streetAvenue: res.data.streetAvenue,
+                        number: res.data.number,
+                        complement: res.data.complement,
+                        city: res.data.city,
+                        state: res.data.state
+                    }
                 }
+                console.log(newUser)
                 setUser(newUser);
                 localStorage.setItem("userKT", JSON.stringify(newUser));
                 setDisable(false);
@@ -117,7 +125,7 @@ export default function SignInPage() {
                 </form>
             </ContainerSC>
             <Flex w='84vw' mt={7} align='center' justify='flex-end'>
-                <BsSkipForwardFill onClick={() => navigate(pages.home)}/>
+                <BsSkipForwardFill onClick={() => navigate(pages.home)} />
             </Flex>
         </PageSC>
 
