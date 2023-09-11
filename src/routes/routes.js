@@ -24,7 +24,8 @@ export const requisitions = {
     postService: API_URL + '/user/new-service',
     getAllParams: API_URL + '/services-params',
     getServicesByCategories: API_URL + '/services-by-categories',
-    signOut: API_URL + '/signout'
+    signOut: API_URL + '/signout',
+    patchAdress: API_URL + '/user/adress'
 }
 
 export function headersAuth(token) {
@@ -37,3 +38,4 @@ export function headersAuth(token) {
         'Authorization': `Bearer ${token}`
     }}
 }
+

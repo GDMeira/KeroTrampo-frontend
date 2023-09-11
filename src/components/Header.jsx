@@ -3,13 +3,12 @@ import { Flex, Image, Text, useDisclosure as useDisclosureDrawer,
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { CiLocationOn } from "react-icons/ci";
 import brench from '../assets/brench.png';
-import { useContext } from 'react';
-import AuthContext from '../contexts/AuthContext';
 import AdressModal from './AdressModal';
 import UserDrawer from './UserDrawer';
+import { useUser } from '../customHooks/User';
 
 export default function Header() {
-    const { user } = useContext(AuthContext);
+    const user = useUser(state => state.user);
     const { isOpen: isOpenDrawer, onOpen: onOpenDrawer, onClose: onCloseDrawer } = useDisclosureDrawer();
     const { isOpen: isOpenModal, onOpen: onOpenModal, onClose: onCloseModal } = useDisclosureModal();
 

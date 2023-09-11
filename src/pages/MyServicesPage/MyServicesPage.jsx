@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FooterMenu from "../../components/FooterMenu";
 import Header from "../../components/Header";
 import { PageSC } from "../../style/PageLayout";
@@ -7,12 +7,12 @@ import { headersAuth, pages, requisitions } from "../../routes/routes";
 import { Box, Button, Flex, Spinner, Text } from "@chakra-ui/react";
 import { AddIcon } from '@chakra-ui/icons';
 import MyServiceCard from "./MyServiceCard";
-import AuthContext from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import SigninMessage from "../../components/SiginMessage";
+import { useUser } from "../../customHooks/User";
 
 export default function MyServicesPage() {
-    const { user, setUser } = useContext(AuthContext);
+    const user = useUser(state => state.user);
     const [showSigninMessage, setShowSigninMessage] = useState(false);
     const [services, setServices] = useState(undefined);
     const navigate = useNavigate();

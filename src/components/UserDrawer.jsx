@@ -1,13 +1,13 @@
 import { Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Image, Stack } from "@chakra-ui/react";
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
 import { headersAuth, pages, requisitions } from '../routes/routes';
+import { useUser } from "../customHooks/User";
 
 
 export default function UserDrawer({ onCloseDrawer, isOpenDrawer }) {
-    const { user, setUser } = useContext(AuthContext);
+    const [user, setUser] = useUser(state => [state.user, state.setUser]);
     const [ isLoading, setIsLoading ] = useState(false) ;
     const navigate = useNavigate();
 

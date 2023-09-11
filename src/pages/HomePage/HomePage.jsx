@@ -40,7 +40,6 @@ export default function HomePage() {
     }, []);
 
     const debouncedSearch = debounce((queryParams) => {
-        console.log('req!')
         axios.get(requisitions.getServices, { params: queryParams })
             .then(res => {
                 setServices(res.data);

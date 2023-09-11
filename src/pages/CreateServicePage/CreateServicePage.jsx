@@ -3,14 +3,14 @@ import FooterMenu from "../../components/FooterMenu";
 import Header from "../../components/Header";
 import { PageSC } from "../../style/PageLayout";
 import CreateServiceForm from "./CreateServiceForm";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { headersAuth, requisitions } from "../../routes/routes";
-import AuthContext from "../../contexts/AuthContext";
+import { useUser } from "../../customHooks/User";
 
 
 export default function CreateServicePage() {
-    const { user, setUser } = useContext(AuthContext)
+    const user = useUser(state => state.user);
     const [serviceParams, setServiceParams] = useState(0);
 
     useEffect(() => {

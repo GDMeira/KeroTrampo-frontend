@@ -2,12 +2,12 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { pages, requisitions } from "../../routes/routes";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Logo from "../../components/Logo";
 import { PageSC } from "../../style/PageLayout";
-import { Button, Flex, Input, InputGroup, InputLeftAddon, InputRightElement, Spinner, Stack } from '@chakra-ui/react';
-import AuthContext from "../../contexts/AuthContext";
+import { Button, Flex, Input, InputGroup, InputRightElement, Spinner, Stack } from '@chakra-ui/react';
 import { BsSkipForwardFill } from "react-icons/bs";
+import { useUser } from "../../customHooks/User";
 
 export default function SignInPage() {
     const [formStates, setFormStates] = useState({
@@ -19,7 +19,9 @@ export default function SignInPage() {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
 
-    const { user, setUser } = useContext(AuthContext)
+    // const { user, setUser } = useContext(AuthContext)
+    const [user, setUser] = useUser(state => [state.user, state.setUser]);
+
     const navigate = useNavigate();
 
     async function handleSubmit(e) {
