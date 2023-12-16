@@ -5,7 +5,7 @@ import { pages, requisitions } from "../../routes/routes";
 import { useState } from "react";
 import Logo from "../../components/Logo";
 import { PageSC } from "../../style/PageLayout";
-import { Button, Flex, Input, InputGroup, InputLeftAddon, InputRightElement, Spinner, Stack } from '@chakra-ui/react';
+import { Button, Flex, Input, InputGroup, InputLeftAddon, InputRightElement, Spinner, Stack, useToast } from '@chakra-ui/react';
 import { BsSkipForwardFill } from "react-icons/bs";
 
 export default function SignUpPage() {
@@ -23,12 +23,19 @@ export default function SignUpPage() {
     const handleClick = () => setShow(!show)
 
     const navigate = useNavigate();
+    const toast = useToast();
 
     async function handleSubmit(e) {
         e.preventDefault();
 
         if (formStates.password !== formStates.checkPassword) {
-            return alert('Confirmação de senha está incorreta!')
+            return toast({
+                title: 'Confirmação de senha está incorreta!',
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top-right'
+            });
         }
 
         const newUser = { ...formStates };
@@ -39,10 +46,23 @@ export default function SignUpPage() {
             .then(() => {
                 setDisable(false);
                 navigate(pages.signIn);
+                toast({
+                    title: 'Cadastro realizado com sucesso!',
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top-right'
+                });
             })
             .catch(error => {
-                alert(error.response.data.message);
                 setDisable(false);
+                toast({
+                    title: 'Erro ao cadastrar!',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top-right'
+                });
             })
     }
 
