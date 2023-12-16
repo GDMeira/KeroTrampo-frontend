@@ -3,22 +3,35 @@ import FooterMenu from "../../components/FooterMenu";
 import Header from "../../components/Header";
 import { PageSC } from "../../style/PageLayout";
 import axios from "axios";
-import { requisitions } from "../../routes/routes";
-import { Spinner } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { pages, requisitions } from "../../routes/routes";
+import { Spinner, useToast } from "@chakra-ui/react";
+import { useNavigate, useParams } from "react-router-dom";
 import ServiceDetailCard from "./ServiceDetailCard";
 import ProviderCard from "./ProviderCard";
 
 export default function ServiceDetail() {
     const [serviceInfo, setServiceInfo] = useState(undefined);
     const { id } = useParams();
+    const toast = useToast();
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get(requisitions.getServiceDetail + id)
             .then(res => {
+                console.log(res.data)
                 setServiceInfo({ service: res.data[0].service, provider: res.data[0].provider })
             })
-            .catch(error => alert(error.response.data.message));
+            .catch(error => {
+                toast({
+                    title: 'Erro ao carregar serviço!',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top-right'
+                });
+                navigate(pages.servicesByCategories);
+                console.log(error);
+            });
     }, [])
 
     return (

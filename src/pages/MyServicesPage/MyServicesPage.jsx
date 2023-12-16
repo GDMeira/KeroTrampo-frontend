@@ -47,7 +47,7 @@ export default function MyServicesPage() {
                             fontSize="3xl"
                             fontWeight="extrabold"
                         >
-                            Crie um novo trampo!
+                            Seus trampos!
                         </Text>
                     </Box>
                     <Flex wrap='wrap' justifyContent='space-evenly'>

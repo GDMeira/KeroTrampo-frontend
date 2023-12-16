@@ -48,14 +48,19 @@ export default function SignInPage() {
                         state: res.data.state
                     }
                 }
-                console.log(newUser)
                 setUser(newUser);
                 localStorage.setItem("userKT", JSON.stringify(newUser));
                 setDisable(false);
                 navigate(pages.home);
             })
             .catch(error => {
-                alert(error.response.data.message);
+                toast({
+                    title: 'Erro ao logar!',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top-right'
+                });
                 setDisable(false);
             })
     }
