@@ -2,14 +2,14 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { pages, requisitions } from "../../routes/routes";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Logo from "../../components/Logo";
 import { PageSC } from "../../style/PageLayout";
-import { Button, Flex, Input, InputGroup, InputLeftAddon, InputRightElement, Spinner, Stack } from '@chakra-ui/react';
-import AuthContext from "../../contexts/AuthContext";
+import { Button, Flex, Input, InputGroup, InputRightElement, Spinner, Stack } from '@chakra-ui/react';
 import { BsSkipForwardFill } from "react-icons/bs";
+import { useUser } from "../../customHooks/User";
 
-export default function SignUpPage() {
+export default function SignInPage() {
     const [formStates, setFormStates] = useState({
         email: '',
         password: ''
@@ -19,7 +19,9 @@ export default function SignUpPage() {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
 
-    const { user, setUser } = useContext(AuthContext)
+    // const { user, setUser } = useContext(AuthContext)
+    const [user, setUser] = useUser(state => [state.user, state.setUser]);
+
     const navigate = useNavigate();
 
     async function handleSubmit(e) {
@@ -31,10 +33,24 @@ export default function SignUpPage() {
         axios.post(requisitions.postSignIn, user)
             .then((res) => {
                 const newUser = {
-                    token: res.data.token
+                    token: res.data.token,
+                    image: res.data.image,
+                    name: res.data.name,
+                    isProvider: res.data.isProvider,
+                    description: res.data.description,
+                    phone: res.data.phone,
+                    id: res.data.id,
+                    adress: {
+                        streetAvenue: res.data.streetAvenue,
+                        number: res.data.number,
+                        complement: res.data.complement,
+                        city: res.data.city,
+                        state: res.data.state
+                    }
                 }
+                console.log(newUser)
                 setUser(newUser);
-                localStorage.setItem("user", JSON.stringify(newUser));
+                localStorage.setItem("userKT", JSON.stringify(newUser));
                 setDisable(false);
                 navigate(pages.home);
             })
@@ -56,7 +72,7 @@ export default function SignUpPage() {
                 <form onSubmit={e => handleSubmit(e)}>
                     <TopBox >
                         <Logo />
-                        <div>Signin</div>
+                        <div>Sign in</div>
                     </TopBox>
 
                     <Stack spacing={5} mt={30} mb={30} >
@@ -111,7 +127,7 @@ export default function SignUpPage() {
                 </form>
             </ContainerSC>
             <Flex w='84vw' mt={7} align='center' justify='flex-end'>
-                <BsSkipForwardFill onClick={() => navigate(pages.home)}/>
+                <BsSkipForwardFill onClick={() => navigate(pages.home)} />
             </Flex>
         </PageSC>
 
