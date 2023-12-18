@@ -4,30 +4,38 @@ import Header from "../../components/Header";
 import { PageSC } from "../../style/PageLayout";
 import axios from "axios";
 import { headersAuth, pages, requisitions } from "../../routes/routes";
-import { Box, Button, Flex, Spinner, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Spinner, Text, useToast } from "@chakra-ui/react";
 import { AddIcon } from '@chakra-ui/icons';
 import MyServiceCard from "./MyServiceCard";
 import { useNavigate } from "react-router-dom";
 import SigninMessage from "../../components/SiginMessage";
 import { useUser } from "../../customHooks/User";
+import ProviderMessage from "../../components/ProviderMessage";
 
 export default function MyServicesPage() {
     const user = useUser(state => state.user);
     const [showSigninMessage, setShowSigninMessage] = useState(false);
     const [services, setServices] = useState(undefined);
     const navigate = useNavigate();
+    const toast = useToast();
 
     useEffect(() => {
+        console.log(user)
         axios.get(requisitions.getMyServices, headersAuth(user?.token))
             .then(res => {
                 setServices(res.data);
             })
             .catch(error => {
-                console.log(error)
                 if (error.response.status === 401) {
                     setShowSigninMessage(true);
                 } else {
-                    alert(error.response.data.message);
+                    toast({
+                        title: 'Erro ao acessar serviços!',
+                        status: 'error',
+                        duration: 3000,
+                        isClosable: true,
+                        position: 'top-right'
+                    });
                 }
             });
     }, [])
@@ -35,6 +43,7 @@ export default function MyServicesPage() {
     return (
         <PageSC>
             {showSigninMessage && <SigninMessage />}
+            {!user.isProvider && <ProviderMessage />}
             <Header />
             {!services && <Spinner size='xl' />}
             {services?.length === 0 || !services ? (

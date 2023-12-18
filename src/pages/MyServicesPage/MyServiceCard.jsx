@@ -12,7 +12,7 @@ export default function MyServiceCard({ service }) {
             <Card
                 mt='6'
                 direction={{ base: 'column', sm: 'row' }}
-                w='40%'
+                w='40%' minW={'130px'}
                 h='200px'
                 overflow='hidden'
                 variant='outline'

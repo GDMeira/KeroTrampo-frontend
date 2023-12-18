@@ -10,7 +10,7 @@ export default function ServiceCard({ service }) {
             <Card mt='3'
                 ml={3}
                 direction={{ base: 'column', sm: 'row' }}
-                w='150px'
+                minW='150px' maxW={'30dvw'}
                 h='200px'
                 overflow='hidden'
                 variant='outline'
@@ -19,7 +19,7 @@ export default function ServiceCard({ service }) {
             >
                 <Image
                     objectFit='cover'
-                    maxW={{ base: '100%', sm: '200px' }}
+                    maxW={'100%'}
                     src={service.url}
                     alt='Service image'
                     h='100px'

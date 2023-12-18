@@ -53,7 +53,7 @@ export default function SignInPage() {
                 setDisable(false);
                 navigate(pages.home);
             })
-            .catch(error => {
+            .catch(() => {
                 toast({
                     title: 'Erro ao logar!',
                     status: 'error',

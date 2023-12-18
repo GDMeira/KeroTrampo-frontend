@@ -9,7 +9,7 @@ export default function CategoryMenu({ category }) {
                 <Text color="#000" fontSize="3xl" fontWeight="extrabold" ml={3}>
                     {category.name}
                 </Text>
-                <Flex overflowX='scroll' align='center' justifyContent='flex-start' minW='100vw'>
+                <Flex overflowX='scroll' align='center' justifyContent='flex-start' minW='100dvw' maxW={'100dvw'}>
                     {category.service.map(s => <ServiceCard key={s.id} service={s} />)}
                 </Flex>
             </>

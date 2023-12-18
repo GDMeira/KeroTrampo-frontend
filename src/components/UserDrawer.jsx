@@ -1,4 +1,4 @@
-import { Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Image, Stack } from "@chakra-ui/react";
+import { Button, Drawer, DrawerBody, DrawerContent, DrawerHeader, DrawerOverlay, Image, Stack, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,20 +10,29 @@ export default function UserDrawer({ onCloseDrawer, isOpenDrawer }) {
     const [user, setUser] = useUser(state => [state.user, state.setUser]);
     const [ isLoading, setIsLoading ] = useState(false) ;
     const navigate = useNavigate();
+    const toast = useToast();
 
     async function signOut() {
         setIsLoading(true);
 
         axios.delete(requisitions.signOut, headersAuth(user.token))
             .then(() => {
-                onCloseDrawer();
                 localStorage.removeItem('userKT');
                 setUser(undefined);
+                onCloseDrawer();
                 navigate(pages.signIn);
             })
             .catch(err => {
                 setIsLoading(false);
-                alert(err.response.data.message);
+                toast({
+                    title: 'Erro ao sair!',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top-right'
+                });
+                localStorage.removeItem('userKT');
+                navigate(pages.signIn);
             })
     }
 

@@ -25,7 +25,8 @@ export const requisitions = {
     getAllParams: API_URL + '/services-params',
     getServicesByCategories: API_URL + '/services-by-categories',
     signOut: API_URL + '/signout',
-    patchAdress: API_URL + '/user/adress'
+    patchAdress: API_URL + '/user/address',
+    postAdress: API_URL + '/user/address'
 }
 
 export function headersAuth(token) {

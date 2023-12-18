@@ -2,34 +2,33 @@ import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogConten
 import React from "react"
 import { useNavigate } from "react-router-dom";
 import { pages } from "../routes/routes";
+import ProviderForm from "./ProviderForm";
+import { useUser } from "../customHooks/User";
 
-export default function SigninMessage() {
-  const { onClose } = useDisclosure();
+export default function ProviderMessage() {
   const cancelRef = React.useRef();
   const navigate = useNavigate();
+  const [user, setAdress] = useUser(state => [state.user, state.setAdress]);
 
   return (
     <>
       <AlertDialog
         motionPreset='slideInBottom'
         leastDestructiveRef={cancelRef}
-        onClose={onClose}
-        isOpen={true}
+        isOpen={!user.isProvider}
         isCentered
       >
         <AlertDialogOverlay />
 
         <AlertDialogContent>
-          <AlertDialogHeader>Acesso não permitido</AlertDialogHeader>
+          <AlertDialogHeader>Torne-se provedor de serviços</AlertDialogHeader>
           <AlertDialogBody>
-            Parece que você ainda não fez login. Deseja fazer login ou voltar para home?
+            Parece que você ainda não é um provedor, preencha o formulário para se tornar um.
+            <ProviderForm />
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button onClick={() => navigate(pages.home)}>
-              Home
-            </Button>
-            <Button colorScheme='teal' ml={3} onClick={() => navigate(pages.signIn)}>
-              Login
+              Voltar para home
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

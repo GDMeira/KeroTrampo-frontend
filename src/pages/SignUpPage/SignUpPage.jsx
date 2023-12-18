@@ -54,7 +54,7 @@ export default function SignUpPage() {
                     position: 'top-right'
                 });
             })
-            .catch(error => {
+            .catch(() => {
                 setDisable(false);
                 toast({
                     title: 'Erro ao cadastrar!',
@@ -71,8 +71,6 @@ export default function SignUpPage() {
         newFormStates[e.target.id] = e.target.value;
         setFormStates(newFormStates);
     }
-
-    const isInputInvalid = formStates.checkPassword.length < 3;
 
     return (
         <PageSC>
@@ -107,7 +105,9 @@ export default function SignUpPage() {
                             disabled={disable}
                         />
                         <InputGroup>
-                            <InputLeftAddon children='+55' bg="none" />
+                            <InputLeftAddon bg="none" >
+                                +55
+                            </InputLeftAddon>
                             <Input
                                 id="phone"
                                 type='tel'
@@ -189,7 +189,7 @@ export default function SignUpPage() {
                 </form>
             </ContainerSC>
             <Flex w='84vw' mt={7} align='center' justify='flex-end'>
-                <BsSkipForwardFill onClick={() => navigate(pages.home)}/>
+                <BsSkipForwardFill onClick={() => navigate(pages.home)} />
             </Flex>
         </PageSC>
 

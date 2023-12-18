@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Spinner } from "@chakra-ui/react";
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Spinner, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { requisitions } from "../routes/routes";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import { useUser } from "../customHooks/User";
 export default function AdressModal({ isOpenModal, onCloseModal }) {
     const [user, setAdress] = useUser(state => [state.user, state.setAdress]);
     const [serviceParams, setServiceParams] = useState(undefined);
+    const toast = useToast();
 
     const [formData, setFormData] = useState({
         state: user?.adress.state || '',
@@ -17,10 +18,15 @@ export default function AdressModal({ isOpenModal, onCloseModal }) {
     useEffect(() => {
         axios.get(requisitions.getAllParams)
             .then(resp => {
-                console.log(resp.data);
                 setServiceParams(resp.data);
             })
-            .catch(error => alert(error.response.data.message));
+            .catch(() => toast({
+                title: 'Erro ao acessar serviços!',
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top-right'
+            }));
     }, []);
 
     function handleInputChange(e) {
@@ -32,7 +38,7 @@ export default function AdressModal({ isOpenModal, onCloseModal }) {
         }
 
         setFormData(newData);
-    };
+    }
 
     function handleSubmit(e) {
         const newAdress = {
@@ -40,8 +46,7 @@ export default function AdressModal({ isOpenModal, onCloseModal }) {
                 state: formData.state
         }
         setAdress(newAdress);
-        console.log(user)
-        //if (user.token) 
+        //if (user.token) TODO: update user adress
 
         onCloseModal();
     }
