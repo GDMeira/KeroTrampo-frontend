@@ -4,13 +4,14 @@ import Header from "../../components/Header";
 import { PageSC } from "../../style/PageLayout";
 import axios from "axios";
 import { requisitions } from "../../routes/routes";
-import { Box, Input, RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack, Select, Spinner, Text } from "@chakra-ui/react";
+import { Box, Input, RangeSlider, RangeSliderFilledTrack, RangeSliderThumb, RangeSliderTrack, Select, Spinner, Text, useToast } from "@chakra-ui/react";
 import ServiceCard from "./ServiceCard";
 import debounce from "lodash.debounce";
 
 export default function HomePage() {
     const [serviceParams, setServiceParams] = useState(undefined);
     const [services, setServices] = useState(undefined);
+    const toast = useToast();
 
     const [formData, setFormData] = useState({
         searchQuery: '',
@@ -30,13 +31,25 @@ export default function HomePage() {
                     priceRange: [resp.data.minCost, resp.data.maxCost]
                 }));
             })
-            .catch(error => alert(error.response.data.message));
+            .catch(() => toast({
+                title: 'Erro ao acessar API!',
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top-right'
+            }));
 
         axios.get(requisitions.getServices)
             .then(res => {
                 setServices(res.data);
             })
-            .catch(error => alert(error.response.data.message));
+            .catch(() => toast({
+                title: 'Erro ao acessar API!',
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+                position: 'top-right'
+            }));
     }, []);
 
     const debouncedSearch = debounce((queryParams) => {
@@ -75,7 +88,7 @@ export default function HomePage() {
             state: newData.state
         };
         debouncedSearch(queryParams);
-    };
+    }
 
     return (
         <PageSC>

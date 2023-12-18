@@ -18,7 +18,6 @@ export default function ServiceDetail() {
     useEffect(() => {
         axios.get(requisitions.getServiceDetail + id)
             .then(res => {
-                console.log(res.data)
                 setServiceInfo({ service: res.data[0].service, provider: res.data[0].provider })
             })
             .catch(error => {
@@ -30,7 +29,6 @@ export default function ServiceDetail() {
                     position: 'top-right'
                 });
                 navigate(pages.servicesByCategories);
-                console.log(error);
             });
     }, [])
 

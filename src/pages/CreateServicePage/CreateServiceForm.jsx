@@ -30,7 +30,7 @@ export default function CreateServiceForm({ serviceParams, user }) {
         description: '',
         isVisible: true,
         category: serviceParams.categories[0],
-        images: [{id: -1, url: ''}],
+        images: [{ id: -1, url: '' }],
         mainImage: '',
         targetRegion: serviceParams.targets[0],
     });
@@ -48,7 +48,7 @@ export default function CreateServiceForm({ serviceParams, user }) {
     const handleAddUrl = () => {
         setFormData((prevData) => ({
             ...prevData,
-            images: [...prevData.images, {id: newId, url: ''}]
+            images: [...prevData.images, { id: newId, url: '' }]
         }));
         setNewId(newId - 1);
     };
@@ -75,18 +75,24 @@ export default function CreateServiceForm({ serviceParams, user }) {
         if (serviceData.mainImage === '') serviceData.mainImage = serviceData.images[0].url;
 
         axios.post(requisitions.postService, serviceData, headersAuth(user.token))
-            .then(res => {
+            .then(() => {
                 toast({
                     title: 'Trampo criado.',
                     description: "Seu trampo foi salvo com sucesso.",
                     status: 'success',
                     duration: 6000,
                     isClosable: true,
-                  });
+                });
                 navigate(pages.myServices);
             })
             .catch(error => {
-                alert(error.response.data.message);
+                toast({
+                    title: 'Falha ao criar trampo.',
+                    description: error.response.data.message,
+                    status: 'error',
+                    duration: 6000,
+                    isClosable: true,
+                });
                 setIsDisable(false);
             })
 
@@ -196,7 +202,7 @@ export default function CreateServiceForm({ serviceParams, user }) {
                         </Flex>
                     ))}
                     <Button size="sm" onClick={handleAddUrl} colorScheme="red" disabled={isDisable}>
-                        <AddIcon/>
+                        <AddIcon />
                     </Button>
                 </FormControl>
 

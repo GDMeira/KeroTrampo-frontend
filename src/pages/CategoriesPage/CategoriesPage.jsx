@@ -5,7 +5,6 @@ import { PageSC } from "../../style/PageLayout";
 import axios from "axios";
 import { requisitions } from "../../routes/routes";
 import { Box, Spinner, Text } from "@chakra-ui/react";
-import ServiceCard from "./ServiceCard";
 import CategoryMenu from "./CategoryMenu";
 
 export default function CategoriesPage() {
@@ -14,7 +13,6 @@ export default function CategoriesPage() {
     useEffect(() => {
         axios.get(requisitions.getServicesByCategories)
             .then(res => {
-                console.log(res.data);
                 setServices(res.data);
             })
             .catch(error => alert(error.response.data.message));

@@ -14,6 +14,7 @@ import {
     Image,
     Flex,
     Spinner,
+    useToast,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons'
 import axios from 'axios';
@@ -22,6 +23,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function EditServiceForm({ service, id, user }) {
     const navigate = useNavigate();
+    const toast = useToast();
     const [newId, setNewId] = useState(-1);
     const [formData, setFormData] = useState({
         meanCost: '',
@@ -56,7 +58,7 @@ export default function EditServiceForm({ service, id, user }) {
             ...prevData,
             [name]: type === 'checkbox' ? checked : value,
         }));
-    };
+    }
 
     const handleAddUrl = () => {
         setFormData((prevData) => ({
@@ -82,12 +84,24 @@ export default function EditServiceForm({ service, id, user }) {
         serviceData.images = serviceData.images.filter(image => image.url !== '');
 
         axios.put(requisitions.updateService + id, serviceData, headersAuth(user.token))
-            .then(res => {
-                alert('Sucesso!');
+            .then(() => {
+                toast({
+                    title: 'Sucesso! Serviço atualizado.',
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top-right'
+                });
                 navigate(pages.myServices);
             })
-            .catch(error => {
-                alert(error.response.data.message);
+            .catch(() => {
+                toast({
+                    title: 'Erro ao atualizar serviço!',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top-right'
+                });
                 setIsDisable(false);
             })
 
