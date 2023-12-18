@@ -20,7 +20,6 @@ export default function MyServicesPage() {
     const toast = useToast();
 
     useEffect(() => {
-        console.log(user)
         axios.get(requisitions.getMyServices, headersAuth(user?.token))
             .then(res => {
                 setServices(res.data);
